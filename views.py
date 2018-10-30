@@ -90,6 +90,7 @@ def showAllProducts():
 @app.route('/products/<category>')
 @auth.login_required
 def showCategoriedProducts(category):
+    print (category)
     if category == 'fruit':
         fruit_items = session.query(Product).filter_by(category = 'fruit').all()
         return jsonify(fruit_products = [f.serialize for f in fruit_items])
@@ -98,7 +99,7 @@ def showCategoriedProducts(category):
         return jsonify(legume_products = [l.serialize for l in legume_items])
     if category == 'vegetable':
         vegetable_items = session.query(Product).filter_by(category = 'vegetable').all()
-        return jsonify(produce_products = [p.serialize for p in produce_items])
+        return jsonify(produce_products = [p.serialize for p in vegetable_items])
     
 
 

@@ -53,7 +53,7 @@ try:
 	h = Http()
 	h.add_credentials(token,'blank')
 	url = address + '/products'
-	data = dict(name = "apple", category = "fruit", price= "$.99")
+	data = dict(name = "broccoli", category = "vegetable", price= "$2.99")
 	resp, content = h.request(url,'POST', body = json.dumps(data), headers = {"Content-Type" : "application/json"})
 	if resp['status'] != '200':
 		raise Exception('Received an unsuccessful status code of %s' % resp['status'])
@@ -66,7 +66,51 @@ else:
 
 
 #TEST 4: TRY ACCESSING ENDPOINT WITH AN INVALID TOKEN
-
+invalidToken = "XXXXXXXXXXXXXXXXXXXXXXXXX"
+try:
+	h = Http()
+	h.add_credentials(invalidToken,'blank')
+	url = address + '/products'
+	resp, content = h.request(url,'GET', headers = {"Content-Type" : "application/json"})
+	print (content)
+	if resp['status'] != '200':
+		raise Exception('Received an unsuccessful status code of %s' % resp['status'])
+except Exception as err:
+	print "Test 4 FAILED: Could not add new products"
+	print err.args
+	sys.exit()
+else:
+	print "Test 4 PASS: Succesfully retrived all products"
+	
 #TEST 5: TRY TO VIEW ALL PRODUCTS IN DATABASE 
 
+try:
+	h = Http()
+	h.add_credentials(token,'blank')
+	url = address + '/products'
+	resp, content = h.request(url,'GET', headers = {"Content-Type" : "application/json"})
+	print (content)
+	if resp['status'] != '200':
+		raise Exception('Received an unsuccessful status code of %s' % resp['status'])
+except Exception as err:
+	print "Test 5 FAILED: Could not add new products"
+	print err.args
+	sys.exit()
+else:
+	print "Test 5 PASS: Succesfully retrived all products"
+
 #TEST 6: TRY TO VIEW A SPECIFIC CATEGORY OF PRODUCTS
+try:
+	h = Http()
+	h.add_credentials(token,'blank')
+	url = address + '/products/vegetable'	
+	resp, content = h.request(url,'GET', headers = {"Content-Type" : "application/json"})
+	print (content)
+	if resp['status'] != '200':
+		raise Exception('Received an unsuccessful status code of %s' % resp['status'])
+except Exception as err:
+	print "Test 6 FAILED: Could not add new products"
+	print err.args
+	sys.exit()
+else:
+	print "Test 6 PASS: Succesfully retrived all products"
